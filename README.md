@@ -1,7 +1,7 @@
 nodeClientSession
 =================
 
-nodejs client cookie session middleware, support multi process and multi server without any other database(such as redis or mongodb) to store session data, cookie is encryption and sha1 verify  signatures. 
+nodejs client cookie session middleware, support cross process and multi server without any other database(such as redis or mongodb) to store session data, cookie is encryption and sha1 verify  signatures. 
 
 working flow
 1.Generation middleware and set the key which is strong enough
@@ -14,3 +14,4 @@ working flow
 
 5.Before server respones the client, nodeClientSession package will add cookie header in it, and update the client session data.
 
+still coding~ comming soon!

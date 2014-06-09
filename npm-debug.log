@@ -1,0 +1,43 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node',
+1 verbose cli   'C:\\Users\\snoopyxdy\\AppData\\Roaming\\npm\\node_modules\\cnpm\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   '--userconfig=C:\\Users\\snoopyxdy\\.cnpmrc',
+1 verbose cli   '--disturl=http://dist.cnpmjs.org',
+1 verbose cli   '--cache=C:\\Users\\snoopyxdy\\.npm\\.cache_cnpm',
+1 verbose cli   '--registry=http://r.cnpmjs.org',
+1 verbose cli   'install' ]
+2 info using npm@1.4.6
+3 info using node@v0.10.28
+4 verbose readDependencies using package.json deps
+5 verbose install where, deps [ 'F:\\github\\nodeClientSession', [ 'cookie' ] ]
+6 info preinstall client-session@0.1.0
+7 verbose readDependencies using package.json deps
+8 verbose already installed skipping cookie@0.1.2 F:\github\nodeClientSession
+9 silly resolved []
+10 info build F:\github\nodeClientSession
+11 verbose linkStuff [ false, false, false, 'F:\\github' ]
+12 info linkStuff client-session@0.1.0
+13 verbose linkBins client-session@0.1.0
+14 verbose linkMans client-session@0.1.0
+15 verbose rebuildBundles client-session@0.1.0
+16 verbose rebuildBundles [ 'cookie' ]
+17 info install client-session@0.1.0
+18 verbose unsafe-perm in lifecycle true
+19 info client-session@0.1.0 Failed to exec install script
+20 error client-session@0.1.0 install: `node-gyp rebuild`
+20 error Exit status 1
+21 error Failed at the client-session@0.1.0 install script.
+21 error This is most likely a problem with the client-session package,
+21 error not with npm itself.
+21 error Tell the author that this fails on your system:
+21 error     node-gyp rebuild
+21 error You can get their info via:
+21 error     npm owner ls client-session
+21 error There is likely additional logging output above.
+22 error System Windows_NT 6.2.9200
+23 error command "node" "C:\\Users\\snoopyxdy\\AppData\\Roaming\\npm\\node_modules\\cnpm\\node_modules\\npm\\bin\\npm-cli.js" "--userconfig=C:\\Users\\snoopyxdy\\.cnpmrc" "--disturl=http://dist.cnpmjs.org" "--cache=C:\\Users\\snoopyxdy\\.npm\\.cache_cnpm" "--registry=http://r.cnpmjs.org" "install"
+24 error cwd F:\github\nodeClientSession
+25 error node -v v0.10.28
+26 error npm -v 1.4.6
+27 error code ELIFECYCLE
+28 verbose exit [ 1, true ]
