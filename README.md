@@ -99,7 +99,7 @@ express + redis + 2 process session:
 		Server Hostname:        192.168.150.3
 		Server Port:            8124
 
-		Document Path:          /\
+		Document Path:          /
 		Document Length:        28 bytes
 
 		Concurrency Level:      500
@@ -138,7 +138,7 @@ express + client-session +2 process session:
 		Server Hostname:        192.168.150.3
 		Server Port:            8124
 
-		Document Path:          /\
+		Document Path:          /
 		Document Length:        28 bytes
 
 		Concurrency Level:      500
