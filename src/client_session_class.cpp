@@ -133,13 +133,13 @@ int Csession_Class::checkSign(const char *sessionString, char *key, string &ojso
 
 	//new 2 char[]
 	char ojson[1024];
-	char signature[32];
+	char signature[33];
 
 	//copy split origin json str and signature
 	memcpy( ojson, &sessionString[0], last_pot);
 	ojson[last_pot] = '\0';
 	memcpy( signature, &sessionString[last_pot+1], signLen);
-	signature[32] = '\0';
+	signature[signLen] = '\0';
 
 	//get check md5 string
 	string check_sign = md5Str(ojson, key);
