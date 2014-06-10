@@ -2,7 +2,7 @@
 
 nodejs client cookie session middleware, support cross process and multi server without any other database(such as redis or mongodb) to store session data, cookie is encryption and md5 verify signatures. 
 
-the module are also be used in express framework.
+the module can also be used in express framework.
 
 ## Installing the module
 
