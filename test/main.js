@@ -1,8 +1,6 @@
 var cs = require('../index.js');
 var assert = require('assert');
 
-
-
 //test unit
 try{
 	var cs_ins = cs('a');
@@ -33,7 +31,7 @@ try{
 try{
 	var cs_ins = cs(null,{maxAge:-1});
 }catch(e){
-	assert.equal(e,'maxAge must be larger than 0, unit is second.')
+	assert.equal(e,'maxAge must be larger than 0  or equal 0, unit is second.')
 }
 
 //test unit
@@ -66,6 +64,9 @@ assert.equal(cs_ins.opt.path,'/test')
 assert.equal(cs_ins.opt.maxAge,7200)
 assert.equal(cs_ins.opt.secure,true)
 assert.equal(cs_ins.opt.httpOnly,false)
+
+
+
 
 
 //test unit
@@ -151,6 +152,46 @@ assert.equal(typeof req.csession, 'object');
 assert.equal(JSON.stringify(req.csession), '{}');
 
 
+
+//test unit
+//use default key
+var cs_ins_2 = cs(null,{
+	path:'/test',
+	maxAge:0,
+	secure:true,
+	httpOnly:false,
+});
+var req = {headers:{}}
+var res = {
+	headers:{},
+	getHeader:function(){
+		return null
+	},
+	setHeader:function(name, cookie){ 
+		 console.log(name,cookie)
+		 res.headers.cookie = cookie
+	}
+}
+
+cs_ins_2.csset(req,res);
+var next_csession = res.headers.cookie;
+console.log(next_csession)
+assert.equal(typeof res.headers.cookie,'string');
+assert.equal(res.headers.cookie.indexOf('csession=') !== -1, true);
+assert.equal(res.headers.cookie.indexOf('Max-Age=3600;') === -1, true);
+assert.equal(res.headers.cookie.indexOf('Path=/test;') !== -1, true);
+assert.equal(res.headers.cookie.indexOf('HttpOnly') === -1, true);
+assert.equal(res.headers.cookie.indexOf('Secure') !== -1, true);
+
+console.log(next_csession)
+var req = {
+	headers:{
+		cookie:next_csession
+	}
+}
+cs_ins_2.csget(req,res);
+assert.equal(typeof req.csession, 'object');
+assert.equal(JSON.stringify(req.csession), '{}');
 
 
 

@@ -70,6 +70,34 @@ when you run the example,you will see count +1 every time in your browser
 		app.listen(8124);
 		console.log('Server running at http://127.0.0.1:8124/');
 
+##Api doc
+1.get clientSession object
+	
+	var clientSession = require('client-session')(YOUR_SERCRET_KEY, OPTIONS)
+
+2.OPTIONS
+default options is below:
+	{
+		path:'/',  //session path
+		maxAge:3600, //session stored time,set 0 when user close browser, session will be lost
+		secure:false, //https session
+		httpOnly:true, //httpOnly,set true, browser javascript could not be get cookie
+	}
+
+3.get csession from request objcet
+
+	clientSession.csget(request, response [,callback]);
+
+the client session will bd stored in `request['csession']`
+
+4.flush the client session to client browser.
+
+	clientSession.csset(request, response);//flush session to cookie
+
+5.express example
+
+	see below express use example,make sure before you response to client call the method `req.csflush()` or `res.csflush()` to flush session into cookie header
+
 ##clinet-session work flow:
 1.Generation middleware and set the key which is strong enough
 
