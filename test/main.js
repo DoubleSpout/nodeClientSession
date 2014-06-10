@@ -78,7 +78,7 @@ var res = {
 		return null
 	},
 	setHeader:function(cookie){ 
-		 res.headers = cookie[0]
+		 res.headers = cookie
 	}
 }
 var count = 1
@@ -103,7 +103,7 @@ var res = {
 		return null
 	},
 	setHeader:function(cookie){ 
-		 res.headers = cookie[0]
+		 res.headers = cookie
 	}
 }
 var count = 1
@@ -128,7 +128,7 @@ var res = {
 	},
 	setHeader:function(name, cookie){ 
 		 console.log(name,cookie)
-		 res.headers.cookie = cookie[0]
+		 res.headers.cookie = cookie
 	}
 }
 
@@ -165,7 +165,7 @@ var res = {
 	},
 	setHeader:function(name, cookie){ 
 		 console.log(name,cookie)
-		 res.headers.cookie = cookie[0]
+		 res.headers.cookie = cookie
 	}
 }
 
@@ -204,7 +204,7 @@ var res = {
 	},
 	setHeader:function(name, cookie){ 
 		 console.log(name,cookie)
-		 res.headers.cookie = cookie[0]
+		 res.headers.cookie = cookie
 	}
 }
 
@@ -241,7 +241,7 @@ var res = {
 	},
 	setHeader:function(name, cookie){ 
 		 console.log(name,cookie)
-		 res.headers.cookie = cookie[0]
+		 res.headers.cookie = cookie
 	}
 }
 
@@ -286,7 +286,7 @@ var res = {
 	},
 	setHeader:function(name, cookie){ 
 		 console.log(name,cookie)
-		 res.headers.cookie = cookie[0]
+		 res.headers.cookie = cookie
 	}
 }
 
