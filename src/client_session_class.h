@@ -14,7 +14,7 @@ class Csession_Class {
   static Handle<Value> csessionSet(const Arguments& args);
 
   //check session is valid
-  static int checkSign(const char *sessionString, char *key, char **ojson_ptr);
+  static int checkSign(const char *sessionString, char *key, string &ojson_ptr);
   //encrypt
   static void xorSessionStr(string &sessionString, char *key);
   static string md5Str(char *sessionString, char *key);

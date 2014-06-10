@@ -4,6 +4,7 @@
 #include <string.h>
 #include "client_session_class.h"
 #include "md5.h"
+#include "base64.h"
 
 using namespace v8;
 using namespace std;
@@ -31,28 +32,41 @@ Handle<Value> Csession_Class::csessionGet(const Arguments& args){
 	//to char *
 	char *cs_ptr = *csession_str;
 	char *key_ptr = *key_str;
-	string cs_string = cs_ptr;
+	string temp_cs_str = cs_ptr;
+	string cs_string;
 
-	//pointer to char pointer
-	char** ojson_ptr = 0;
-	
-	//dencrypt session
-	xorSessionStr(cs_string, key_ptr);
+	bool r = Base64Decode(temp_cs_str, &cs_string);
 
-	//check session is valid
-	const char* cs_xor_ptr = cs_string.c_str();
-	int check_r = checkSign(cs_xor_ptr, key_ptr, ojson_ptr);
-
-	if(check_r){
-		//set req.cession = session_jsonstr
-		req_obj->Set(String::New("csession"),String::New(*ojson_ptr));
+	if(!r){
+		//base64 decode error return 4
+		req_obj->Set(String::New("_check_csession_error"),Number::New(4));
+		return scope.Close(Undefined());
 	}
 
-	//del pointer
-	delete []*ojson_ptr;
+	string ojson_ptr = "";
+
+	//dencrypt session
+	xorSessionStr(cs_string, key_ptr);
+	//check session is valid
+	//pointer to char pointer
+	//cout<<cs_string<<endl;
+
+	const char* cs_xor_ptr = cs_string.c_str();
+	int check_r = checkSign(cs_xor_ptr, key_ptr, ojson_ptr);
+	
+	//cout<<check_r<<endl;
+	
+	if(check_r == 1){
+		//set req.cession = session_jsonstr
+		req_obj->Set(String::New("csession"),String::New(ojson_ptr.c_str()));
+
+	}	
+	else{
+		req_obj->Set(String::New("_check_csession_error"),Number::New(check_r));
+	}
+	
 	return scope.Close(Undefined()); 
 };
-
 
 /*
 req,
@@ -82,54 +96,80 @@ Handle<Value> Csession_Class::csessionSet(const Arguments& args){
 	string session_sign_str = session_string + string_pot + signature_string;
 	//dencrypt session return origin json str
 	//cout<<session_sign_str<<endl;
-
-	const char * cs_sign_ptr = session_sign_str.c_str();
+	
 	xorSessionStr(session_sign_str, key_ptr);
-	//string s1 = session_sign_str;
-	//cout<<s1<<endl;
+
 	//xorSessionStr(session_sign_str, key_ptr);
 
+	//base64 encode
+	string out_base64_str;
+	bool r = Base64Encode(session_sign_str, &out_base64_str);
+
+	if(!r){
+		ThrowException(Exception::TypeError(String::New("base64 encode error")));
+		return scope.Close(Undefined()); 
+	}
 	//set req.cession = session_jsonstr
+	const char * cs_sign_ptr = out_base64_str.c_str();
 	res_obj->Set(String::New("_csession_str"),String::New(cs_sign_ptr));
 
 	return scope.Close(Undefined()); 
 };
 
 //check
-int Csession_Class::checkSign(const char *sessionString, char *key, char **ojson_ptr){
+int Csession_Class::checkSign(const char *sessionString, char *key, string &ojson_ptr){
 	//get last pot pos
 	string session_string = sessionString;
+
 	int last_pot = session_string.find_last_of(pot);
-	int len = sizeof(sessionString);
-	int signLen = len - (last_pot+1);
+	//if not found pot
+	if(last_pot == string::npos){
+		//no pot
+		return 2;
+	}
+
+	int len = session_string.length();
+	int signLen = len - last_pot- 1;
+
 	//new 2 char[]
-	char *ojson = new char[last_pot];
-	char *signature = new char[signLen];
+	char ojson[1024];
+	char signature[32];
 
 	//copy split origin json str and signature
 	memcpy( ojson, &sessionString[0], last_pot);
 	ojson[last_pot] = '\0';
-	memcpy( signature, &sessionString[last_pot], signLen);
-	signature[signLen] = '\0';
+	memcpy( signature, &sessionString[last_pot+1], signLen);
+	signature[32] = '\0';
 
 	//get check md5 string
 	string check_sign = md5Str(ojson, key);
+	
 	const char *check_sign_char = check_sign.c_str();
-
 	//compare two signature
 	int cmp_result = strcmp(check_sign_char, signature);
 
-	delete []signature;
+
+	//string sg = signature;
+	//cout<< cmp_result <<endl;
+	//cout<< check_sign <<endl;
+	//cout<< sg <<endl;
+
+	//delete pointer
+	int result;
 
 	if(cmp_result == 0){
-		ojson_ptr = &ojson;
-		return 1;
+		ojson_ptr = ojson;	
+		result = 1;	
 	}
 	else{
-		//if check wrong delete ojson pointer
-		delete []ojson;
-		return 0;
+		//if check wrong
+		result = 3;
 	}	
+
+	//delete []signature;
+	//delete []ojson;
+	//cout<< result <<endl;
+	return result;
 }
 
 
@@ -137,7 +177,7 @@ int Csession_Class::checkSign(const char *sessionString, char *key, char **ojson
 //dencryptSession
 void Csession_Class::xorSessionStr(string &sessionString, char *key){
 	char xor_key = key[key_pos];
-	int len = sizeof(sessionString);
+	int len = sessionString.length();
 	//xor operate
 	for(int i=0;i<len;i++){
 		sessionString[i] = sessionString[i] ^ xor_key;
