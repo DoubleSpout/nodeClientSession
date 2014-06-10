@@ -8,7 +8,7 @@ the module can also be used in express framework.
 
 With [npm](http://npmjs.org/):
 
-ifile module is supported windows, linux, mac.
+client-session module is supported windows, linux, mac.
 
 Make sure, node-gyp has installed.
 
