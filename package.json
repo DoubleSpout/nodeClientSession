@@ -5,7 +5,7 @@
     "url": "http://snoopyxdy.blog.163.com"
   },
   "name": "client-session",
-  "description": "store session in client browers's cookie, support Cross Process session without database store",
+  "description": "cookie session for nodejs, store session in client browers's cookie, support Cross Process session without database store",
   "keywords": [
     "cookie session",
     "cookie",
