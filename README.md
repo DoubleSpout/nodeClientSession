@@ -1,4 +1,4 @@
-# client-session(fast and simple nodejs client cookie session)[![Build Status](https://travis-ci.org/DoubleSpout/nodeClientSession.png?branch=master)](https://travis-ci.org/DoubleSpout/nodeClientSession)
+# client-session(cookie session for nodejs)[![Build Status](https://travis-ci.org/DoubleSpout/nodeClientSession.png?branch=master)](https://travis-ci.org/DoubleSpout/nodeClientSession)
 
 nodejs client cookie session middleware, support cross process and multi server without any other database(such as redis or mongodb) to store session data, cookie is encryption and md5 verify signatures. 
 
@@ -96,7 +96,7 @@ the client session will bd stored in `request['csession']`
 
 5.express example
 
-	see below express use example,make sure before you response to client call the method `req.csflush()` or `res.csflush()` to flush session into cookie header
+see the express example, make sure before you response to client call the method `req.csflush()` or `res.csflush()` to flush session into cookie header
 
 ##clinet-session work flow:
 1.Generation middleware and set the key which is strong enough
