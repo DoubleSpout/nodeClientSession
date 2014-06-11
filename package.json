@@ -7,9 +7,10 @@
   "name": "client-session",
   "description": "store session in client browers's cookie, support Cross Process session without database store",
   "keywords": [
-    "node",
-    "client",
+    "cookie session",
+    "cookie",
     "session",
+    "client session",
     "cookie",
     "process",
     "Cross Process"
