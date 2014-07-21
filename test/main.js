@@ -195,10 +195,10 @@ assert.equal(JSON.stringify(req.csession), '{}');
 
 
 
-//test unit
+//test unit add null value
 //session content
 var cs_ins_3 = cs();
-var req = {headers:{},csession:{"a":1,"bbb":"放到","ccc":"1312jj312l312"}}
+var req = {headers:{},csession:{"a":1,"bbb":"放到","ccc":"1312jj312l312","dd":null}}
 var res = {
 	headers:{},
 	getHeader:function(){
