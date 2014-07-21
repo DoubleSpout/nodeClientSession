@@ -77,6 +77,7 @@ when you run the example,you will see count +1 every time in your browser
 
 2.OPTIONS
 default options is below:
+
 	{
 		path:'/',  //session path
 		maxAge:3600, //session stored time,set 0 when user close browser, session will be lost
