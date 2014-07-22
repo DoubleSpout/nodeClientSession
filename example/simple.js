@@ -12,10 +12,19 @@ http.createServer(function (request, response) {
    else	count++
 
    request.csession['count'] = count; //update session
+   request.csession['count2'] = count*2; //update session
+   request.csession['count3'] = count*3; //update session
+   request.csession['count4'] = count*4; //update session
+   request.csession['count5'] = count*5; //update session
+   request.csession['count6'] = count*6; //update session
+   request.csession['count7'] = count*7; //update session
+   request.csession['count8'] = count*8; //update session
+   request.csession['count9'] = count*9; //update session
+   request.csession['count10'] = count*10; //update session
    clientSession.csset(request, response);//flush session to cookie
 
    response.writeHead(200, {'Content-Type': 'text/plain'});
-   response.end(count.toString()); //response count add every time
+   response.end(JSON.stringify(request.csession)); //response count add every time
 
 }).listen(8124);
 console.log('Server running at http://127.0.0.1:8124/');
