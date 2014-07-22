@@ -21,6 +21,12 @@ http.createServer(function (request, response) {
    request.csession['count8'] = count*8; //update session
    request.csession['count9'] = count*9; //update session
    request.csession['count10'] = count*10; //update session
+
+   clientSession.csset(request, response);//flush session to cookie
+   clientSession.csset(request, response);//flush session to cookie
+   clientSession.csset(request, response);//flush session to cookie
+   clientSession.csset(request, response);//flush session to cookie
+   clientSession.csset(request, response);//flush session to cookie
    clientSession.csset(request, response);//flush session to cookie
 
    response.writeHead(200, {'Content-Type': 'text/plain'});
