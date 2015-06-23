@@ -24,7 +24,7 @@ To include the module in your project:
 
      var cs = require('client-session');
 
-##simple example
+## Simple example
 
 		var http = require('http');
 		var cs = require('client-session'); 
@@ -50,7 +50,7 @@ To include the module in your project:
 
 when you run the example,you will see count +1 every time in your browser
 
-##express 4.x example
+## Express 4.x example
 
 		var express = require('express');
 		var path = require('path')
@@ -70,7 +70,7 @@ when you run the example,you will see count +1 every time in your browser
 		app.listen(8124);
 		console.log('Server running at http://127.0.0.1:8124/');
 
-##Api doc
+## Api doc
 1.get clientSession object
 	
 	var clientSession = require('client-session')(YOUR_SERCRET_KEY, OPTIONS)
@@ -99,25 +99,19 @@ the client session will bd stored in `request['csession']`
 
 see the express example, make sure before you response to client call the method `req.csflush()` or `res.csflush()` to flush session into cookie header
 
-##clinet-session work flow:
-1.Generation middleware and set the key which is strong enough
+## Client-session work flow:
+1. Generation middleware and set the key which is strong enough
+2. When client request is comming,send the req,res and cookie string to c++ addon
+3. get the client session data from cookie string, and store it in req object
+4. Before server respones the client, generate the signature and store it in res objec, and then add cookie into response header.
 
-2.When client request is comming,send the req,res and cookie string to c++ addon
+## Notice
+1. The client-session must be smaller than 1k,so it better to store userid or username.
+2. Although the client-session cookie is encryption, better not store passowrd in it,just store user's identity.
+3. To use client-session, without the use of ip hash or cookie hash, client-session works fine.
+4. To use client-session, you never need database such as redis to store session data,they are all stored in the browser's cookie. 
 
-3.get the client session data from cookie string, and store it in req object
-
-4.Before server respones the client, generate the signature and store it in res objec, and then add cookie into response header.
-
-##notice
-1.The client-session must be smaller than 1k,so it better to store userid or username.
-
-2.Although the clinet-session cookie is encryption, better not store passowrd in it,just store user's identity.
-
-3.To use client-session, without the use of ip hash or cookie hash, client-session works fine.
-
-4.To use clinet-session, you never need database such as redis to store session data,they are all stored in the browser's cookie. 
-
-##benchmark
+## Benchmark
 commond : ab -c 500 -n 20000 http://192.168.150.3:8124/
 
 env: linux system 2cpus 64bits 8G men
@@ -201,6 +195,4 @@ express + client-session +2 process session:
 		 100%   3948 (longest request)
 
 ## License
-
 MIT
-
